@@ -2,10 +2,6 @@
 
 Este repositorio contiene el proyecto desarrollado para la asignatura "Diseño Avanzado de Sistemas Digitales - IPD 432". El objetivo principal del proyecto es diseñar e implementar un módulo maestro para la comunicación SPI en la FPGA Nexys A7, utilizando el acelerómetro ADXL362 como dispositivo esclavo.
 
-## Introducción
-
-La comunicación SPI (Serial Peripheral Interface) es un protocolo de comunicación síncrona ampliamente utilizado en sistemas digitales para la transferencia de datos entre dispositivos integrados. Este proyecto busca diseñar un módulo maestro SPI generalizado que pueda interactuar con diferentes dispositivos esclavos, optimizando su reutilización en diversas aplicaciones.
-
 ## Estructura del Informe
 
 El informe se estructura en las siguientes secciones:
@@ -21,19 +17,17 @@ El informe se estructura en las siguientes secciones:
 - `constrains/`: Archivo constrain para la NEXYS A7.
 - `simulations/`: Archivo testbench utilizado para probar algunos módulos.
 
-## Implementación
+## Implementación y reutilización
 
-Los módulos SPI_Master y Comunicacion_Acc controlan la dinámica entre las señales SCLK, MISO, MOSI y CS, permitiendo configurar parámetros como la cantidad de bytes a enviar, la frecuencia del reloj, el modo de operación, entre otros. La implementación se validó mediante la comunicación con el acelerómetro ADXL362, visualizando los datos en el display de la FPGA.
+Los módulos SPI_Master y SPI_Master_core controlan la dinámica entre las señales SCLK, MISO, MOSI y CS, permitiendo configurar parámetros como la cantidad de bytes a enviar, la frecuencia del reloj, el modo de operación, entre otros. La implementación se validó mediante la comunicación con el acelerómetro ADXL362, visualizando los datos en el display de la FPGA.
 
-## Resultados
+En caso de querer utilizar el maestro SPI para comunicarse con un esclavo diferente al de esta implementación, basta con reutilizar los módulos SPI_Master y SPI_Master_core. En el módulo SPI_Master_core se puede modificar el modo de operación mediante i_CPOL y i_CPHA, la frecuencia del reloj con CLKS_PER_HALF_BIT y i_Clk, y la información a enviar con i_TX_Byte y i_TX_DV. En el módulo SPI_Master se puede modificar lo ante mencionado, además de la cantidad de bytes por ciclo de CS con MAX_BYTES_PER_CS y la cantidad de ciclos inactivos entre byte enviado con CS_INACTIVE_CLKS. En caso de tener que conectar el maestro SPI con más de un esclavo SPI o en una configuración diferente, se recomienda cambiar la lógica de SPI_Master, manteniendo intacto SPI_Master_core. Finalmente, las demás señales de flag servirán para interactuar con la posible lógica que requiera el nuevo esclavo a comunicar.
 
-- El módulo maestro SPI se implementó de manera generalizada, permitiendo su reutilización con diferentes dispositivos esclavos.
-- La comunicación SPI se verificó con éxito mediante un analizador lógico y la visualización de datos en el display de la FPGA.
-- Se proponen mejoras futuras para soportar múltiples esclavos y explorar otras aplicaciones prácticas del sistema SPI.
-
-## Referencias
+## Referencias y material útil
 
 1. [ADXL362 Micropower, 3-Axis, ±2 g/±4 g/±8 g Digital Output MEMS Accelerometer](https://www.analog.com/en/products/adxl362.html)
 2. [Nexys A7 Reference Manual](https://digilent.com/reference/programmable-logic/nexys-a7/reference-manual)
 3. [Introduction to SPI Interface](https://www.analog.com/en/resources/analog-dialogue/articles/introduction-to-spi-interface.html)
 4. J. Chen and S. Huang, “Analysis and Comparison of UART, SPI and I2C,” in 2023 IEEE 2nd International Conference on Electrical Engineering, Big Data and Algorithms (EEBDA), 2023, pp. 272–276.
+5. [https://www.youtube.com/watch?v=7b3YwQWwvXM&t=583s](https://youtu.be/7b3YwQWwvXM?si=DtBLZ9bwVR7rxoHE)
+6. https://youtube.com/playlist?list=PLnAoag7Ew-vq5kOyfyNN50xL718AtLoCQ&si=sktsFU4r6KqfFhP_
