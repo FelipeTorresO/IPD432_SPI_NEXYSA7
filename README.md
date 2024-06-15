@@ -23,6 +23,8 @@ Los módulos SPI_Master y SPI_Master_core controlan la dinámica entre las seña
 
 En caso de querer utilizar el maestro SPI para comunicarse con un esclavo diferente al de esta implementación, basta con reutilizar los módulos SPI_Master y SPI_Master_core. En el módulo SPI_Master_core se puede modificar el modo de operación mediante i_CPOL y i_CPHA, la frecuencia del reloj con CLKS_PER_HALF_BIT y i_Clk, y la información a enviar con i_TX_Byte y i_TX_DV. En el módulo SPI_Master se puede modificar lo ante mencionado, además de la cantidad de bytes por ciclo de CS con MAX_BYTES_PER_CS y la cantidad de ciclos inactivos entre byte enviado con CS_INACTIVE_CLKS. En caso de tener que conectar el maestro SPI con más de un esclavo SPI o en una configuración diferente, se recomienda cambiar la lógica de SPI_Master, manteniendo intacto SPI_Master_core. Finalmente, las demás señales de flag servirán para interactuar con la posible lógica que requiera el nuevo esclavo a comunicar.
 
+Información más especifica se puede encontrar comentada en los archivos de la implementación.
+
 ## Referencias y material útil
 
 1. [ADXL362 Micropower, 3-Axis, ±2 g/±4 g/±8 g Digital Output MEMS Accelerometer](https://www.analog.com/en/products/adxl362.html)
